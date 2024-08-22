@@ -2,7 +2,6 @@
 import HelloWorld from './components/HelloWorld.vue'
 import walkthrough from "./plugins/walkthrough.ts";
 import WTrigger from "./components/WTrigger.vue";
-import {s} from "vite/dist/node/types.d-aGj9QkWt";
 
 const steps = [
   { element: '#step-1', content: '<h2>Welcome</h2><p>This is the first step.</p>' },

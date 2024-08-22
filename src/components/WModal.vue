@@ -1,0 +1,144 @@
+<script setup lang="ts">
+
+export interface ModalOptions {
+  element: HTMLElement;
+  content: string;
+  index: number;
+  stepsCount: number,
+  isVisible: boolean,
+}
+
+defineProps<ModalOptions>()
+
+const emits = defineEmits(['prev', 'next', 'close'])
+
+const prevStep = () => {
+  emits('prev');
+}
+const nextStep = () => {
+  emits('next');
+}
+const closeModal = () => {
+  emits('close');
+}
+</script>
+
+<template>
+    <div v-if="isVisible" class="walkthrough-modal">
+      <div class="walkthrough-content">
+        <button @click="closeModal" id="walkthrough-close">X</button>
+        <div class="walkthrough-container">
+          <div v-html="content"></div>
+        </div>
+        <div class="walkthrough-buttons">
+          <div id="walkthrough-steps">
+          <span
+              v-for="n in stepsCount"
+              :key="n"
+              :class="{'current': n === index}"
+              class="walkthrough-step">•</span>
+          </div>
+          <div>
+            <button @click="prevStep" :disabled="index === 1">Previous</button>
+            <button @click="nextStep" v-if="index < stepsCount">Next</button>
+            <button @click="closeModal" v-else>Finish</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</template>
+
+<style scoped lang="scss">
+
+.walkthrough-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.walkthrough-content {
+  position: relative;
+  background-color: #fff;
+  box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px;
+  padding: 20px 20px 10px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 40%;
+  overflow: hidden;
+  .walkthrough-container {
+    video, iframe, img {
+      max-width: 100%;
+      aspect-ratio: 1;
+    }
+    video, iframe {
+      aspect-ratio: 16 / 9;
+    }
+    img {
+      aspect-ratio: 1 / 1;
+    }
+  }
+}
+
+
+.walkthrough-buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  place-items: center;
+  gap: 15px;
+
+  #walkthrough-steps {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    .walkthrough-step {
+      color: rgba(10, 93, 101, 0.66);
+    }
+    .current {
+      color: #15616d;
+      font-weight: bolder;
+    }
+  }
+
+  button {
+    margin: 0 5px;
+    border: none;
+    background-color: #15616d;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    &:hover {
+      background-color: rgba(10, 93, 101, 0.66);
+    }
+    &:disabled {
+      background-color: rgba(10, 93, 101, 0.66);
+      pointer-events: none;
+    }
+  }
+}
+
+#walkthrough-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: none;
+  background-color: #78290f;
+  color: #fff;
+  padding: 8px 11px;
+  z-index: 1002;
+
+  &:hover {
+    background-color: rgba(120, 41, 15, 0.77);
+  }
+}
+
+.hidden {
+  display: none;
+}
+</style>

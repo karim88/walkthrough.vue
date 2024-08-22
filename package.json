@@ -20,5 +20,28 @@
     "vite": "^5.4.1",
     "vue-tsc": "^2.0.29",
     "sass": "^1.77.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ouladck/walkthrough.vue.git"
+  },
+  "keywords": [
+    "walkthrough",
+    "tooltips",
+    "interactive",
+    "tutorials",
+    "tutorials",
+    "guided",
+    "tours",
+    "vue"
+  ],
+  "author": "Karim Oulad Chalha <ouladchalha.k@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ouladck/walkthrough.vue/issues"
+  },
+  "homepage": "https://github.com/ouladck/walkthrough.vue#readme",
+  "publishConfig": {
+    "access": "public"
   }
 }

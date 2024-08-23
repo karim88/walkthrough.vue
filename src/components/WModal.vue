@@ -6,9 +6,16 @@ export interface ModalOptions {
   index: number;
   stepsCount: number,
   isVisible: boolean,
+  prevText?: string,
+  nextText?: string,
+  finishText?: string,
 }
 
-defineProps<ModalOptions>()
+withDefaults(defineProps<ModalOptions>(), {
+  nextText: 'Next',
+  prevText: 'Previous',
+  finishText: 'Finish',
+})
 
 const emits = defineEmits(['prev', 'next', 'close'])
 
@@ -39,24 +46,39 @@ const closeModal = () => {
               class="walkthrough-step">•</span>
           </div>
           <div>
-            <button @click="prevStep" :disabled="index === 1">Previous</button>
-            <button @click="nextStep" v-if="index < stepsCount">Next</button>
-            <button @click="closeModal" v-else>Finish</button>
+            <button @click="prevStep" :disabled="index === 1">{{ prevText }}</button>
+            <button @click="nextStep" v-if="index < stepsCount">{{ nextText }}</button>
+            <button @click="closeModal" v-else>{{ finishText }}</button>
           </div>
         </div>
       </div>
     </div>
 </template>
 
+<style lang="scss">
+.walkthrough-container {
+  video, iframe, img {
+    height: 200px;
+    border-radius: 15px;
+    aspect-ratio: 1;
+  }
+  video, iframe {
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+  img {
+    aspect-ratio: 1 / 1;
+  }
+}
+</style>
 <style scoped lang="scss">
-
 .walkthrough-modal {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   z-index: 1001;
 }
@@ -69,19 +91,8 @@ const closeModal = () => {
   border-radius: 10px;
   text-align: center;
   max-width: 40%;
+  margin: 10px;
   overflow: hidden;
-  .walkthrough-container {
-    video, iframe, img {
-      max-width: 100%;
-      aspect-ratio: 1;
-    }
-    video, iframe {
-      aspect-ratio: 16 / 9;
-    }
-    img {
-      aspect-ratio: 1 / 1;
-    }
-  }
 }
 
 

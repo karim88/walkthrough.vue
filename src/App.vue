@@ -1,17 +1,30 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
-import walkthrough from "./plugins/walkthrough.ts";
+import walkthrough, {Options, Step} from "./plugins/walkthrough.ts";
 import WTrigger from "./components/WTrigger.vue";
+import {reactive} from "vue";
 
-const steps = [
-  { element: '#step-1', content: '<h2>Welcome</h2><p>This is the first step.</p>' },
-  { element: '.step-2', content: '<h2>Step 2</h2><p>This is the second step.</p>' },
-  { element: '[data-step="3"]', content: '<h2>Final Step</h2><p>This is the final step of the walkthrough.</p>' },
-  { element: '#step-4', content: '<h2>Final Step</h2><p>This is the final step of the walkthrough.</p>' }
-];
+const steps = reactive<Step[]>([
+  {
+    element: '.walk-through-start',
+    content: `<h2>Welcome</h2><img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWw4M2k2bGM3NDg3dWo3MHV3cTV4andoaDkxcDV1dGNoYmVheDdoMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYC0LajbaPoEADu/giphy.webp" alt="welcome image"><p>as you already know this is the button to start the tutorial.</p>`,
+    callback: () => {
+      console.log('start')
+    },
+  },
+  { element: '#step-1', content: `<h2>Vitejs</h2><p>Discover Vite.js here</p>` },
+  { element: '.step-2', content: '<h2>Vuejs</h2><p>You can find vue documentation by clicking in the link</p>' },
+  { element: '[data-step="3"]', content: '<h2>create-vue</h2><p>Check out create-vue, the official Vue + Vite starter</p>' },
+  { element: '#step-4', content: '<h2>IDE Support for Vue</h2><p>Learn more about IDE Support for Vue in the Vue Docs Scaling up Guide</p>' }
+]);
+const options = reactive<Options>({
+  prevText: 'précédente',
+  nextText: 'Suivante',
+  finishText: 'Fini',
+})
 
 const startWalkthrough = () => {
-  walkthrough.init(steps);
+  walkthrough.init(options, steps);
 }
 </script>
 
@@ -30,7 +43,12 @@ const startWalkthrough = () => {
   </div>
   <HelloWorld msg="Vite + Vue" />
   <button @click="startWalkthrough">Start Walkthrough</button>
-  <WTrigger text="Start Walkthrough" position="top-left" @start="startWalkthrough" />
+  <WTrigger
+      position="top-left"
+      @start="startWalkthrough"
+  >
+    Commencer!
+  </WTrigger>
 </template>
 
 <style lang="scss">

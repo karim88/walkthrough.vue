@@ -1,13 +1,19 @@
 <script setup lang="ts">
+
 import {computed} from "vue";
 
-defineProps<{
-  text: string
+const props = defineProps<{
   position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
   bgColor?: string,
   color?: string,
 }>()
 
+const style = computed(() => {
+  return [
+    `color: ${props.color || '#ffffff'}`,
+    `background-color: ${props?.bgColor || '#15616d'}`,
+  ]
+})
 const emits = defineEmits(['start'])
 const startWalkthrough = () => emits('start')
 
@@ -15,7 +21,13 @@ const startWalkthrough = () => emits('start')
 
 <template>
   <div :class="`walk-through-start ${position}`">
-    <button @click="startWalkthrough">Start Walkthrough</button>
+    <button
+        ref="button"
+        :style
+        @click="startWalkthrough"
+    >
+      <slot />
+    </button>
   </div>
 </template>
 
@@ -23,10 +35,13 @@ const startWalkthrough = () => emits('start')
 .walk-through-start {
   position: absolute;
   padding: 10px;
+
   button {
-    background-color: #15616d;
-    color: #fff;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px;
     border: none;
+    &:hover {
+      opacity: 0.7;
+    }
   }
 }
 .top-right {

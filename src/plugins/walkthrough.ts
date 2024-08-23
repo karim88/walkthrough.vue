@@ -1,10 +1,15 @@
-import { App, createApp, reactive, UnwrapRef } from 'vue';
+import {App, computed, createApp, reactive, UnwrapRef} from 'vue';
 import WModal from "../components/WModal.vue";
 
 export interface Step {
     element: string;
     content: string;
     callback?: () => void;
+}
+export interface Options {
+    prevText?: string,
+    nextText?: string,
+    finishText?: string,
 }
 
 const Walkthrough = {
@@ -18,20 +23,35 @@ const Walkthrough = {
         steps: 0,
         currentStep: 1,
         content: '',
+        startText: 'Start',
+        prevText: 'Previous',
+        nextText: 'Next',
+        finishText: 'Finish',
         modalInstance: null as UnwrapRef<App<Element>> | null,
     }),
 
-    init(steps: Step[]) {
+    init(options: Options,steps: Step[]) {
+
+        if (options.prevText) {
+            this.state.prevText = options.prevText;
+        }
+        if (options.nextText) {
+            this.state.nextText = options.nextText;
+        }
+        if (options.finishText) {
+            this.state.finishText = options.finishText;
+        }
         this.state.steps = steps.length;
         this.state.currentStep = 1;
         this.state.isVisible = true;
-        this.renderModal(steps[this.state.currentStep - 1]);
+        const step = computed<Step>( () => steps[this.state.currentStep - 1])
+        this.renderModal(step.value);
 
         const nextStep = () => {
             if (this.state.currentStep < this.state.steps) {
                 this.removePreviousStep()
                 this.state.currentStep++;
-                this.renderModal(steps[this.state.currentStep - 1]);
+                this.renderModal(step.value);
                 this.mountModal({ nextStep, prevStep, closeModal });
                 console.log('nextStep');
             }
@@ -41,7 +61,7 @@ const Walkthrough = {
             if (this.state.currentStep > 1) {
                 this.removePreviousStep()
                 this.state.currentStep--;
-                this.renderModal(steps[this.state.currentStep - 1]);
+                this.renderModal(step.value);
                 this.mountModal({ nextStep, prevStep, closeModal });
                 console.log('prevStep');
             }
@@ -53,6 +73,7 @@ const Walkthrough = {
 
         };
 
+        step.value.callback?.()
         this.mountModal({ nextStep, prevStep, closeModal });
     },
 
@@ -66,6 +87,9 @@ const Walkthrough = {
                 stepsCount: this.state.steps,
                 isVisible: this.state.isVisible,
                 content: this.state.content,
+                prevText: this.state.prevText,
+                nextText: this.state.nextText,
+                finishText: this.state.finishText,
                 onNext: handlers.nextStep,
                 onPrev: handlers.prevStep,
                 onClose: handlers.closeModal,
@@ -74,6 +98,7 @@ const Walkthrough = {
     },
 
     renderModal(step: Step) {
+        console.log(step)
         this.state.content = step.content;
         this.state.element = step.element;
     },
@@ -90,6 +115,8 @@ const Walkthrough = {
         this.removePreviousStep()
         const modalContainer = document.createElement('div');
         modalContainer.classList.add('walkthrough-modal-container');
+        modalContainer.style.position = 'absolute';
+        modalContainer.style.top = '0';
         const selector = document.querySelector(this.state.element)!
         selector.classList.add('walkthrough-highlight');
         selector.appendChild(modalContainer);
@@ -100,10 +127,14 @@ const Walkthrough = {
             stepsCount: this.state.steps,
             isVisible: this.state.isVisible,
             content: this.state.content,
+            prevText: this.state.prevText,
+            nextText: this.state.nextText,
+            finishText: this.state.finishText,
             onNext: handlers.nextStep,
             onPrev: handlers.prevStep,
             onClose: handlers.closeModal,
         });
+
         this.state.modalInstance.mount(modalContainer);
         this.positionModal(selector, document.querySelector('.walkthrough-modal')!);
     },
@@ -135,7 +166,7 @@ const Walkthrough = {
 
         // Ensure the modal doesn't go offscreen to the right
         if (left + modalRect.width > window.innerWidth) {
-            left = window.innerWidth - modalRect.width - margin;
+            left = window.innerWidth - modalRect.width;
         }
 
         modal.style.top = `${top}px`;

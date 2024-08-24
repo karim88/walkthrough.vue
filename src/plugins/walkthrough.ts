@@ -53,7 +53,6 @@ const Walkthrough = {
                 this.state.currentStep++;
                 this.renderModal(step.value);
                 this.mountModal({ nextStep, prevStep, closeModal });
-                console.log('nextStep');
             }
         };
 
@@ -63,7 +62,6 @@ const Walkthrough = {
                 this.state.currentStep--;
                 this.renderModal(step.value);
                 this.mountModal({ nextStep, prevStep, closeModal });
-                console.log('prevStep');
             }
         };
 
@@ -98,7 +96,6 @@ const Walkthrough = {
     },
 
     renderModal(step: Step) {
-        console.log(step)
         this.state.content = step.content;
         this.state.element = step.element;
     },
@@ -138,6 +135,21 @@ const Walkthrough = {
         this.state.modalInstance.mount(modalContainer);
         this.positionModal(selector, document.querySelector('.walkthrough-modal')!);
     },
+    adjustModalArrow(top: number) {
+        const arrow = document.querySelector('.arrow')!
+        const inner = document.querySelector('.inner')!
+        if (top < 0) {
+            arrow.classList.remove('arrow-bottom')
+            arrow.classList.add('arrow-top')
+            inner.classList.remove('inner-bottom')
+            inner.classList.add('inner-top')
+        } else {
+            arrow.classList.remove('arrow-top')
+            arrow.classList.add('arrow-bottom')
+            inner.classList.remove('inner-top')
+            inner.classList.add('inner-bottom')
+        }
+    },
     positionModal(element: any, modal: HTMLElement) {
         const rect = element.getBoundingClientRect();
         const modalRect = modal.getBoundingClientRect();
@@ -145,6 +157,9 @@ const Walkthrough = {
 
         // Calculate the default top position
         let top = rect.top - modalRect.height - margin;
+
+        // Adjusting the arrow in top or bottom of the modal
+        this.adjustModalArrow(top)
 
         // If the modal is above the top of the viewport, place it below the element
         if (top < 0) {
@@ -157,7 +172,7 @@ const Walkthrough = {
         }
 
         // Calculate the default left position
-        let left = rect.left + (rect.width / 2) - (modalRect.width / 2);
+        let left = rect.left - rect.width - margin;
 
         // Ensure the modal doesn't go offscreen to the left
         if (left < margin) {

@@ -51,6 +51,8 @@ const closeModal = () => {
             <button @click="closeModal" v-else>{{ finishText }}</button>
           </div>
         </div>
+        <div class="arrow arrow-top"></div>
+        <div class="arrow inner inner-top"></div>
       </div>
     </div>
 </template>
@@ -84,10 +86,11 @@ const closeModal = () => {
 }
 
 .walkthrough-content {
-  position: relative;
+  position: static;
   background-color: #fff;
   box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px;
   padding: 20px 20px 10px;
+  border: 2px solid #15616d;
   border-radius: 10px;
   text-align: center;
   max-width: 40%;
@@ -140,6 +143,7 @@ const closeModal = () => {
   top: 0;
   border: none;
   background-color: #78290f;
+  border-radius: 0;
   color: #fff;
   padding: 8px 11px;
   z-index: 1002;
@@ -151,5 +155,35 @@ const closeModal = () => {
 
 .hidden {
   display: none;
+}
+.arrow {
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  position: absolute;
+  left: 30px;
+}
+
+.arrow-top {
+  border-bottom: 20px solid #15616d;
+  top: -20px;
+}
+
+.arrow.inner-top {
+  border-bottom: 20px solid #15616d;
+  border-bottom-color: white;
+  top: -13px;
+  z-index: 1002;
+}
+
+.arrow-bottom {
+  border-top: 20px solid #15616d;
+  bottom: -20px;
+}
+.arrow.inner-bottom {
+  border-top: 20px solid #15616d;
+  border-top-color: white;
+  bottom: -13px;
+  z-index: 1002;
 }
 </style>

@@ -5,6 +5,7 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
   "unpkg": "dist/index.umd.js",
+  "types": "walkthrough.d.ts",
   "files": [
     "dist"
   ],

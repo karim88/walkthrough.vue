@@ -6,3 +6,6 @@ vite.config.ts
 *.scss
 .gitignore
 .idea/
+.vscode/
+*.html
+tsconfig*

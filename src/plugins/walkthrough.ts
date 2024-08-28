@@ -1,5 +1,6 @@
 import {App, computed, createApp, reactive, UnwrapRef} from 'vue';
 import WModal from "../components/WModal.vue";
+import WTrigger from "../components/WTrigger.vue";
 
 export interface Step {
     element: string;
@@ -15,6 +16,7 @@ export interface Options {
 const Walkthrough = {
     install: (app: App) => {
         app.config.globalProperties.$walkthrough = Walkthrough;
+        app.component('WTriggerButton', WTrigger);
     },
 
     state: reactive({

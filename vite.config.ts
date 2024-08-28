@@ -10,7 +10,6 @@ export default defineConfig({
       name: 'exclude-svg-imports',
       enforce: 'pre',
       resolveId(source) {
-        console.log(source)
         if (source.endsWith('.svg')) {
           return source;
         }
@@ -30,8 +29,14 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/plugins/walkthrough.ts'), // Adjust the path to your entry file
-      name: 'VueWalkthrough',
-      fileName: (format) => `vue-walkthrough.${format}.js`,
+      name: 'VueWalkthrough', // The global variable name
+      formats: ['es', 'cjs', 'umd'], // Generate ES module, CommonJS, and UMD
+      fileName: (format) => {
+        if (format === 'es') {
+          return 'index.js'
+        }
+        return `index.${format}.js`
+      },
     },
     rollupOptions: {
       // Ensure to externalize dependencies that you do not want to bundle into your library

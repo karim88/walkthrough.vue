@@ -33,7 +33,9 @@ const closeModal = () => {
 <template>
     <div v-if="isVisible" class="walkthrough-modal">
       <div class="walkthrough-content">
-        <button @click="closeModal" id="walkthrough-close">X</button>
+        <div class="walkthrough-close-container">
+          <button @click="closeModal" id="walkthrough-close">X</button>
+        </div>
         <div class="walkthrough-container">
           <div v-html="content"></div>
         </div>
@@ -96,6 +98,24 @@ const closeModal = () => {
   max-width: 40%;
   margin: 10px;
   overflow: hidden;
+  .walkthrough-close-container {
+    position: relative;
+    #walkthrough-close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      border: none;
+      background-color: #78290f;
+      border-radius: 0;
+      color: #fff;
+      padding: 8px 11px;
+      z-index: 1002;
+
+      &:hover {
+        background-color: rgba(120, 41, 15, 0.77);
+      }
+    }
+  }
 }
 
 
@@ -137,21 +157,6 @@ const closeModal = () => {
   }
 }
 
-#walkthrough-close {
-  position: absolute;
-  right: 0;
-  top: 0;
-  border: none;
-  background-color: #78290f;
-  border-radius: 0;
-  color: #fff;
-  padding: 8px 11px;
-  z-index: 1002;
-
-  &:hover {
-    background-color: rgba(120, 41, 15, 0.77);
-  }
-}
 
 .hidden {
   display: none;

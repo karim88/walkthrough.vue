@@ -14,11 +14,6 @@ export default defineConfig({
           return source;
         }
       },
-      load(id) {
-        if (id.endsWith('.svg')) {
-          throw new Error(`SVG files are not allowed: ${id}`);
-        }
-      },
     },
   ],
   resolve: {

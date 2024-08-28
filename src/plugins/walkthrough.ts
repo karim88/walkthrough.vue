@@ -77,26 +77,6 @@ const Walkthrough = {
         this.mountModal({ nextStep, prevStep, closeModal });
     },
 
-    updateProps(
-        handlers: { nextStep: Function; prevStep: Function; closeModal: Function }
-    ) {
-        if (this.state.modalInstance) {
-            this.state.modalInstance._props = {
-                element: this.state.element,
-                index: this.state.currentStep,
-                stepsCount: this.state.steps,
-                isVisible: this.state.isVisible,
-                content: this.state.content,
-                prevText: this.state.prevText,
-                nextText: this.state.nextText,
-                finishText: this.state.finishText,
-                onNext: handlers.nextStep,
-                onPrev: handlers.prevStep,
-                onClose: handlers.closeModal,
-            }
-        }
-    },
-
     renderModal(step: Step) {
         this.state.content = step.content;
         this.state.element = step.element;

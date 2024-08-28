@@ -19,14 +19,12 @@ withDefaults(defineProps<ModalOptions>(), {
 
 const emits = defineEmits(['prev', 'next', 'close'])
 
-const prevStep = () => {
-  emits('prev');
-}
-const nextStep = () => {
-  emits('next');
-}
-const closeModal = () => {
-  emits('close');
+const prevStep = () => emits('prev');
+const nextStep = () => emits('next');
+const closeModal = () => emits('close')
+const finishStep = () => {
+  emits('next')
+  emits('close')
 }
 </script>
 
@@ -50,7 +48,7 @@ const closeModal = () => {
           <div>
             <button @click="prevStep" :disabled="index === 1">{{ prevText }}</button>
             <button @click="nextStep" v-if="index < stepsCount">{{ nextText }}</button>
-            <button @click="closeModal" v-else>{{ finishText }}</button>
+            <button @click="finishStep" v-else>{{ finishText }}</button>
           </div>
         </div>
         <div class="arrow arrow-top"></div>

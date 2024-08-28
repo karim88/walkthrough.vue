@@ -1,12 +1,18 @@
-import {App, computed, createApp, reactive, UnwrapRef} from 'vue';
+import {App, computed, createApp, reactive, UnwrapRef, WritableComputedRef} from 'vue';
 import WModal from "../components/WModal.vue";
 import WTrigger from "../components/WTrigger.vue";
 
+// Step options
 export interface Step {
     element: string;
     content: string;
-    callback?: () => void;
+    prevText?: string,
+    nextText?: string,
+    finishText?: string,
+    nextCallback?: () => void;
+    prevCallback?: () => void;
 }
+// Walkthrough options
 export interface Options {
     prevText?: string,
     nextText?: string,
@@ -22,8 +28,10 @@ const Walkthrough = {
     state: reactive({
         element: 'body',
         isVisible: false,
-        steps: 0,
-        currentStep: 1,
+        stepsCount: 0,
+        steps: [] as Step[],
+        step: {} as WritableComputedRef<Step>,
+        index: 1,
         content: '',
         startText: 'Start',
         prevText: 'Previous',
@@ -43,25 +51,28 @@ const Walkthrough = {
         if (options.finishText) {
             this.state.finishText = options.finishText;
         }
-        this.state.steps = steps.length;
-        this.state.currentStep = 1;
+        this.state.stepsCount = steps.length;
+        this.state.steps = steps;
+        this.state.index = 1;
         this.state.isVisible = true;
-        const step = computed<Step>( () => steps[this.state.currentStep - 1])
+        const step = computed<Step>( () => steps[this.state.index - 1])
         this.renderModal(step.value);
 
         const nextStep = () => {
-            if (this.state.currentStep < this.state.steps) {
+            step.value.nextCallback?.()
+            if (this.state.index < this.state.stepsCount) {
                 this.removePreviousStep()
-                this.state.currentStep++;
+                this.state.index++;
                 this.renderModal(step.value);
                 this.mountModal({ nextStep, prevStep, closeModal });
             }
         };
 
         const prevStep = () => {
-            if (this.state.currentStep > 1) {
+            if (this.state.index > 1) {
+                step.value.prevCallback?.()
                 this.removePreviousStep()
-                this.state.currentStep--;
+                this.state.index--;
                 this.renderModal(step.value);
                 this.mountModal({ nextStep, prevStep, closeModal });
             }
@@ -73,7 +84,6 @@ const Walkthrough = {
 
         };
 
-        step.value.callback?.()
         this.mountModal({ nextStep, prevStep, closeModal });
     },
 
@@ -99,16 +109,18 @@ const Walkthrough = {
         const selector = document.querySelector(this.state.element)!
         selector.classList.add('walkthrough-highlight');
         selector.appendChild(modalContainer);
+        const step = computed<Step>( () => this.state.steps[this.state.index - 1])
+
 
         this.state.modalInstance = createApp(WModal, {
             element: this.state.element,
-            index: this.state.currentStep,
-            stepsCount: this.state.steps,
+            index: this.state.index,
+            stepsCount: this.state.stepsCount,
             isVisible: this.state.isVisible,
             content: this.state.content,
-            prevText: this.state.prevText,
-            nextText: this.state.nextText,
-            finishText: this.state.finishText,
+            prevText: step.value.prevText ?? this.state.prevText,
+            nextText: step.value.nextText ?? this.state.nextText,
+            finishText: step.value.finishText ?? this.state.finishText,
             onNext: handlers.nextStep,
             onPrev: handlers.prevStep,
             onClose: handlers.closeModal,

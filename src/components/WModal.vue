@@ -72,6 +72,10 @@ const finishStep = () => {
     aspect-ratio: 1 / 1;
   }
 }
+.walkthrough-highlight {
+  outline: 2px solid #78290F;
+  border-radius: 2px;
+}
 </style>
 <style scoped lang="scss">
 .walkthrough-modal {

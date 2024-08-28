@@ -66,10 +66,6 @@ const startWalkthrough = () => {
   </WTrigger>
 </template>
 
-<style lang="scss">
-@import "src/styles/walkthrough.scss";
-</style>
-
 <style scoped>
 .logo {
   height: 6em;

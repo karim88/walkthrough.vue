@@ -42,20 +42,16 @@ const Walkthrough = {
 
     init(options: Options,steps: Step[]) {
 
-        if (options.prevText) {
-            this.state.prevText = options.prevText;
-        }
-        if (options.nextText) {
-            this.state.nextText = options.nextText;
-        }
-        if (options.finishText) {
-            this.state.finishText = options.finishText;
-        }
+        this.state.prevText = options.prevText ?? this.state.prevText;
+        this.state.nextText = options.nextText ?? this.state.nextText;
+        this.state.finishText = options.finishText ?? this.state.finishText;
+
         this.state.stepsCount = steps.length;
         this.state.steps = steps;
         this.state.index = 1;
         this.state.isVisible = true;
-        const step = computed<Step>( () => steps[this.state.index - 1])
+
+        const step = computed<Step>(() => steps[this.state.index - 1]);
         this.renderModal(step.value);
 
         const nextStep = () => {
@@ -107,6 +103,10 @@ const Walkthrough = {
         modalContainer.style.position = 'absolute';
         modalContainer.style.top = '0';
         const selector = document.querySelector(this.state.element)!
+        if (!selector) {
+            console.error(`Element not found: ${this.state.element}`);
+            return;
+        }
         selector.classList.add('walkthrough-highlight');
         selector.appendChild(modalContainer);
         const step = computed<Step>( () => this.state.steps[this.state.index - 1])

@@ -7,14 +7,13 @@ const props = defineProps<{
   bgColor?: string,
   color?: string,
 }>()
+const emits = defineEmits<{ (e: 'start'): void }>();
 
-const style = computed(() => {
-  return [
-    `color: ${props.color || '#ffffff'}`,
-    `background-color: ${props?.bgColor || '#15616d'}`,
-  ]
-})
-const emits = defineEmits(['start'])
+const style = computed(() => ({
+  color: props.color || '#ffffff',
+  backgroundColor: props.bgColor || '#15616d',
+}));
+
 const startWalkthrough = () => emits('start')
 
 </script>
@@ -22,8 +21,8 @@ const startWalkthrough = () => emits('start')
 <template>
   <div :class="`walk-through-start ${position}`">
     <button
-        ref="button"
         :style
+        aria-label="Start Walkthrough"
         @click="startWalkthrough"
     >
       <slot />
@@ -45,6 +44,7 @@ const startWalkthrough = () => emits('start')
     font-weight: 500;
     font-family: inherit;
     cursor: pointer;
+    z-index: 99999;
     transition: border-color 0.25s;
     &:hover {
       opacity: 0.7;

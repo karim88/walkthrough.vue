@@ -1,46 +1,87 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
-import walkthrough, {Options, Step} from "./plugins/walkthrough.ts";
+import walkthrough, { Options, Step } from "./plugins/walkthrough.ts";
 import WTrigger from "./components/WTrigger.vue";
-import {reactive} from "vue";
+import { reactive } from "vue";
 
 const steps = reactive<Step[]>([
   {
     element: '.walk-through-start',
-    content: `<h2>Welcome</h2><img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWw4M2k2bGM3NDg3dWo3MHV3cTV4andoaDkxcDV1dGNoYmVheDdoMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYC0LajbaPoEADu/giphy.webp" alt="welcome image"><p>as you already know this is the button to start the tutorial.</p>`,
-    nextText: 'Console log',
+    content: `
+      <h2>Welcome to the App Tour</h2>
+      <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWw4M2k2bGM3NDg3dWo3MHV3cTV4andoaDkxcDV1dGNoYmVheDdoMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYC0LajbaPoEADu/giphy.webp" alt="welcome image" />
+      <p>This button triggers the application walkthrough. Click 'Start Tour' to begin exploring the main features of the application.</p>
+    `,
+    nextText: 'Next',
     nextCallback() {
-      console.log('ok')
+      console.log('Walkthrough started');
     },
   },
-  { element: '#step-1', content: `<h2>Vitejs</h2><p>Discover Vite.js here</p>` },
-  { element: '.step-2', content: '<h2>Vuejs</h2><p>You can find vue documentation by clicking in the link</p>' },
+  {
+    element: '#step-1',
+    content: `
+      <h2>Vite.js Integration</h2>
+      <p>This section highlights Vite.js, a fast and modern build tool for web projects. It powers the development experience, ensuring quick start-up times and efficient bundling.</p>
+    `,
+  },
+  {
+    element: '.step-2',
+    content: `
+      <h2>Vue.js Documentation</h2>
+      <p>Click on this link to access Vue.js documentation. It provides comprehensive guides and references to help you build your Vue applications effectively.</p>
+    `,
+  },
   {
     element: '#increment',
-    content: '<h2>Triggering Event</h2><p>In this we clicked in the button to increment the counter </p>',
+    content: `
+      <h2>Interactive Counter</h2>
+      <p>Clicking this button increases the counter. This step demonstrates handling user interactions within your app.</p>
+    `,
     nextCallback() {
-      document.getElementById('increment')!.click()
+      document.getElementById('increment')!.click();
+      console.log('Counter incremented');
     },
     prevCallback() {
-      document.getElementById('increment')!.click()
-    }},
-  { element: '[data-step="3"]', content: '<h2>create-vue</h2><p>Check out create-vue, the official Vue + Vite starter</p>' },
+      document.getElementById('increment')!.click();
+      console.log('Counter decremented');
+    },
+  },
+  {
+    element: '[data-step="3"]',
+    content: `
+      <h2>Project Setup with create-vue</h2>
+      <p>Explore the create-vue project setup, which provides a streamlined starting point for Vue + Vite projects. It's the recommended way to get started with Vue.js development.</p>
+    `,
+  },
   {
     element: '#step-4',
-    content: '<h2>IDE Support for Vue</h2><p>Learn more about IDE Support for Vue in the Vue Docs Scaling up Guide</p>',
-    nextCallback () {
-      console.log('Finished')
-    } }
+    content: `
+      <h2>IDE Support</h2>
+      <p>Discover the robust IDE support available for Vue.js, helping you to write, debug, and maintain your code efficiently within your preferred development environment.</p>
+    `,
+  },
+  {
+    element: 'body',
+    content: `
+      <h2>Thank you</h2>
+      <p>Enjoy it</p>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/AoeCfTfZE8w?si=bSDiB2kdgCsD0BMi&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    `,
+    nextCallback() {
+      console.log('Walkthrough completed');
+    },
+  }
 ]);
+
 const options = reactive<Options>({
-  prevText: 'précédente',
-  nextText: 'Suivante',
-  finishText: 'Fini',
-})
+  prevText: 'Previous',
+  nextText: 'Next',
+  finishText: 'Finish',
+});
 
 const startWalkthrough = () => {
   walkthrough.init(options, steps);
-}
+};
 </script>
 
 <template>
@@ -57,12 +98,12 @@ const startWalkthrough = () => {
     </span>
   </div>
   <HelloWorld msg="Vite + Vue" />
-  <button @click="startWalkthrough">Start Walkthrough</button>
+  <button id="increment" @click="startWalkthrough">Start Walkthrough</button>
   <WTrigger
       position="top-left"
       @start="startWalkthrough"
   >
-    Commencer!
+    Start Tour!
   </WTrigger>
 </template>
 

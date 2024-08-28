@@ -7,7 +7,8 @@
   "unpkg": "dist/index.umd.js",
   "types": "walkthrough.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "walkthrough.d.ts"
   ],
   "scripts": {
     "dev": "vite",

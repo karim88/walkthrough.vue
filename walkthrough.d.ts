@@ -1,4 +1,5 @@
 import Walkthrough from "./dist";
-
-declare const Walkthrough = Walkthrough
 export default Walkthrough;
+
+// Re-export the Step and Options interfaces from the plugin file
+export { Step, Options } from "./dist";

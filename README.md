@@ -2,7 +2,7 @@
 
 **walkthrough.vue** is a lightweight, customizable Vue.js plugin that provides an interactive walkthrough experience for your Vue applications. Built with TypeScript and SCSS, this plugin allows you to guide users through key features and elements of your app, enhancing their understanding and engagement.
 
-[![Demo](https://img.youtube.com/vi/23M9E-nFdcs/0.jpg)](https://youtu.be/23M9E-nFdcs)
+[![Demo](https://img.youtube.com/vi/GSDM0J3Yh3k/0.jpg)](https://youtu.be/GSDM0J3Yh3k)
 
 ## Table of Contents
 

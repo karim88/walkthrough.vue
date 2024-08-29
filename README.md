@@ -1,6 +1,6 @@
-# walkthrough.vue
+# walkthrough-vue
 
-**walkthrough.vue** is a lightweight, customizable Vue.js plugin that provides an interactive walkthrough experience for your Vue applications. Built with TypeScript and SCSS, this plugin allows you to guide users through key features and elements of your app, enhancing their understanding and engagement.
+**walkthrough-vue** is a lightweight, customizable Vue.js plugin that provides an interactive walkthrough experience for your Vue applications. Built with TypeScript and SCSS, this plugin allows you to guide users through key features and elements of your app, enhancing their understanding and engagement.
 
 [![Demo](https://img.youtube.com/vi/GSDM0J3Yh3k/0.jpg)](https://youtu.be/GSDM0J3Yh3k)
 
@@ -24,7 +24,7 @@
 You can install the plugin via npm:
 
 ```bash
-npm i walkthrough.vue
+npm i walkthrough-vue
 ```
 
 Alternatively, you can use the plugin directly from the dist folder by including the JavaScript and CSS files in your project:
@@ -33,7 +33,7 @@ Alternatively, you can use the plugin directly from the dist folder by including
 <script src="path/to/dist/walkthrough.umd.js"></script>
 ```
 
-Or from the source code [here](https://github.com/ouladck/walkthrough.vue)
+Or from the source code [here](https://github.com/ouladck/walkthrough-vue)
 
 ## Usage
 
@@ -44,7 +44,7 @@ First, import and register the plugin in main.ts
 ```typescript
 import { createApp } from 'vue'
 import App from './App.vue'
-import Walkthrough from "walkthrough.vue"; // Notice this is the package name 😅 not a vue component
+import Walkthrough from "walkthrough-vue";
 
 const app = createApp(App)
 app.use(Walkthrough) // Register the plugin
@@ -55,7 +55,7 @@ Then import and initialize the walkthrough in your Vue component:
 
 ```vue
 <script setup lang="ts">
-import walkthrough, { type Options, type Step } from 'walkthrough.vue';
+import walkthrough, { type Options, type Step } from 'walkthrough-vue';
 import { reactive } from 'vue';
 
 const steps = reactive<Step[]>([

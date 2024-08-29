@@ -1,5 +1,5 @@
 {
-  "name": "walkthrough.vue",
+  "name": "walkthrough-vue",
   "version": "1.0.2",
   "type": "module",
   "main": "dist/index.cjs.js",
@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ouladck/walkthrough.vue.git"
+    "url": "git+https://github.com/ouladck/walkthrough-vue.git"
   },
   "keywords": [
     "walkthrough",
@@ -46,9 +46,9 @@
   "author": "Karim Oulad Chalha <ouladchalha.k@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ouladck/walkthrough.vue/issues"
+    "url": "https://github.com/ouladck/walkthrough-vue/issues"
   },
-  "homepage": "https://github.com/ouladck/walkthrough.vue#readme",
+  "homepage": "https://github.com/ouladck/walkthrough-vue#readme",
   "publishConfig": {
     "access": "public"
   }

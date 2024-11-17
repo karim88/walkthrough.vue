@@ -61,7 +61,8 @@ import { reactive } from 'vue';
 const steps = reactive<Step[]>([
   {
     element: '#step1',
-    content: 'Welcome to the first step of our guided tour.',
+    title: 'Welcome',
+    content: 'This is the first step of our guided tour.',
   },
   // Add more steps here
 ]);
@@ -107,6 +108,7 @@ You can configure the walkthrough with the following options:
 
 And you can configure each step in the walkthrough with the following options:
 * `selector`: (string) The CSS selector of the element to highlight.
+* `title`: (string, optional) The title to display in the modal or tooltip.
 * `content`: (string) The content to display in the modal or tooltip.
 * `nextText`: (string, optional) customize the Next button text in the step.
 * `prevText`: (string, optional) customize the Previous button text in the step.
@@ -124,6 +126,7 @@ const steps = reactive<Step[]>([
     },
     {
         element: '#step2',
+        title: 'Features',
         content: 'This is a key feature you should know about.',
         nextCallback: () => console.log('Step 2 completed!'),
     },
@@ -134,13 +137,14 @@ const steps = reactive<Step[]>([
 
 The appearance of the walkthrough can be easily customized via SCSS. Key classes you might want to style include:
 
-* `.walkthrough-modal`
-* `.walkthrough-content`
-* `.walkthrough-close-container`
-* `.walkthrough-highlight`
-* `.walkthrough-buttons`
-* `#walkthrough-steps`
-* `.walk-through-start button`
+* .walkthrough-modal
+* .walkthrough-title
+* .walkthrough-content
+* .walkthrough-close-container
+* .walkthrough-highlight
+* .walkthrough-buttons
+* #walkthrough-steps
+* .walk-through-start button
 
 For example:
 
@@ -159,6 +163,7 @@ Here’s an example of the walkthrough in action:
 const steps = reactive<Step[]>([
   {
     element: '#step1',
+    title: 'START',
     content: 'Start here!',
   },
   {
@@ -167,6 +172,7 @@ const steps = reactive<Step[]>([
   },
   {
     element: '#step3',
+    title: 'FINISH',
     content: 'Finally, see how everything works together.',
   },
 ]);
@@ -175,6 +181,13 @@ const startWalkthrough = () => {
   walkthrough.init({}, steps);
 };
 ```
+
+## Navigation Shortcuts
+
+You can use keyboard shortcuts to navigate through the walkthrough:
+
+* **Left Arrow:** Go to the previous step.
+* **Right Arrow:** Go to the next step. 
 
 ## Contributing
 

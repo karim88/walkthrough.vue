@@ -32,6 +32,10 @@ const count = ref(0)
     >.
   </p>
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  <!-- Side note about navigation -->
+  <p class="side-note">
+    <p>NOTE: You can use the left and right arrow keys to navigate through the walkthrough guide.</p>
+  </p>
 </template>
 
 <style scoped>

@@ -7,8 +7,8 @@ import { reactive } from "vue";
 const steps = reactive<Step[]>([
   {
     element: '.walk-through-start',
+    title: 'Welcome to the App Tour',
     content: `
-      <h2>Welcome to the App Tour</h2>
       <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWw4M2k2bGM3NDg3dWo3MHV3cTV4andoaDkxcDV1dGNoYmVheDdoMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYC0LajbaPoEADu/giphy.webp" alt="welcome image" />
       <p>This button triggers the application walkthrough. Click 'Start Tour' to begin exploring the main features of the application.</p>
     `,
@@ -19,22 +19,22 @@ const steps = reactive<Step[]>([
   },
   {
     element: '#step-1',
+    title: 'Vite.js Integration',
     content: `
-      <h2>Vite.js Integration</h2>
       <p>This section highlights Vite.js, a fast and modern build tool for web projects. It powers the development experience, ensuring quick start-up times and efficient bundling.</p>
     `,
   },
   {
     element: '.step-2',
+    title: 'Vue.js Documentation',
     content: `
-      <h2>Vue.js Documentation</h2>
       <p>Click on this link to access Vue.js documentation. It provides comprehensive guides and references to help you build your Vue applications effectively.</p>
     `,
   },
   {
     element: '#increment',
+    title: 'Interactive Counter',
     content: `
-      <h2>Interactive Counter</h2>
       <p>Clicking this button increases the counter. This step demonstrates handling user interactions within your app.</p>
     `,
     nextCallback() {

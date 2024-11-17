@@ -1,10 +1,11 @@
-import {App, computed, createApp, reactive, UnwrapRef, WritableComputedRef} from 'vue';
+import { App, computed, createApp, reactive, UnwrapRef, WritableComputedRef } from 'vue';
 import WModal from "../components/WModal.vue";
 import WTrigger from "../components/WTrigger.vue";
 
 // Step options
 export interface Step {
     element: string;
+    title?: string;
     content: string;
     prevText?: string,
     nextText?: string,
@@ -40,7 +41,7 @@ const Walkthrough = {
         modalInstance: null as UnwrapRef<App<Element>> | null,
     }),
 
-    init(options: Options,steps: Step[]) {
+    init(options: Options, steps: Step[]) {
 
         this.state.prevText = options.prevText ?? this.state.prevText;
         this.state.nextText = options.nextText ?? this.state.nextText;
@@ -109,7 +110,7 @@ const Walkthrough = {
         }
         selector.classList.add('walkthrough-highlight');
         selector.appendChild(modalContainer);
-        const step = computed<Step>( () => this.state.steps[this.state.index - 1])
+        const step = computed<Step>(() => this.state.steps[this.state.index - 1])
 
 
         this.state.modalInstance = createApp(WModal, {
@@ -117,6 +118,7 @@ const Walkthrough = {
             index: this.state.index,
             stepsCount: this.state.stepsCount,
             isVisible: this.state.isVisible,
+            title: step.value.title ?? '',
             content: this.state.content,
             prevText: step.value.prevText ?? this.state.prevText,
             nextText: step.value.nextText ?? this.state.nextText,
